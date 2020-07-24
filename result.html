@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>评估结果</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css" />
+    <script src="js/jquery-1.9.1.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="css/result.css">
+</head>
+
+<body>
+    <div class="container-fluid">
+        <div class="header">
+            <div class="top-left">
+                <h5>
+                    <span class="glyphicon glyphicon-home"></span>
+                    评估结果查看
+                </h5>
+            </div>
+        </div>
+
+        <div class="middle">
+            <div class="rows">
+                <div class="explain">
+                    <div class="titles">
+                        <h5><b>风险等级说明</b><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span></h5>
+                    </div>
+                    <div class="explainlist">
+                        <table class="table table-bordered extab" data-toggle="table" style="text-align: center;">
+                            <thead>
+                                <tr class="active">
+                                    <th style="text-align: center;width: 150px;">风险值</th>
+                                    <th style="text-align: center;width: 150px;">风险等级</th>
+                                    <th style="text-align: center;">描述</th>
+                                    <th style="text-align: center;width: 100px;">备注</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>2.7×10-3以上</td>
+                                    <td>特别重大风险</td>
+                                    <td>停止作业，一旦发生讲产生非常严重的经济或社会影响，如组织信誉严重破坏、严重影响组织的正常经营，经济损失重大、社会影响恶略</td>
+                                    <td>V级</td>
+                                    <!-- <td class="red"><span>红色</span><em
+                                            style="width: 25px;height: 10px;padding-left:10px;background: red;"></em>
+                                    </td> -->
+                                </tr>
+                                <tr>
+                                    <td>2.7×10-5到2.7×10-3</td>
+                                    <td>重大风险</td>
+                                    <td>立即整改，一旦发生将产生较大的经济或者社会影响，在一定范围内给组织的经营和组织信誉造成损害</td>
+                                    <td>IV级</td>
+                                    <!-- <td class="red"><span>橙色</span><em
+                                            style="width: 25px;height: 10px;padding-left:10px;background: orange;"></em>
+                                    </td> -->
+                                </tr>
+                                <tr>
+                                    <td>4.5×10-6到2.7×10-5</td>
+                                    <td>中等风险</td>
+                                    <td>需要整改，一旦发生会造成一定的经济损失、社会或生产经营影响，但影响面和影响程度不大</td>
+                                    <td>III级</td>
+                                    <!-- <td class="red"><span>黄色</span><em
+                                            style="width: 25px;height: 10px;padding-left:10px;background: #ff0;"></em>
+                                    </td> -->
+                                </tr>
+                                <tr>
+                                    <td>1.5×10-6到4.5×10-6</td>
+                                    <td>一般风险</td>
+                                    <td>需要注意，一旦发生造成的影响程度较低，一般仅限于组织内部，通过一定手段很快能解决</td>
+                                    <td>II级</td>
+                                    <!-- <td class="red"><span>蓝色</span><em
+                                            style="width: 25px;height: 10px;padding-left:10px;background: blue;"></em>
+                                    </td> -->
+                                </tr>
+                                <tr>
+                                    <td>0到1.5810-6</td>
+                                    <td>低风险</td>
+                                    <td>稍有危险，一旦发生造成的影响几乎不存在，通过简单的措施就能弥补</td>
+                                    <td>I级</td>
+                                    <!-- <td class="red"><span>绿色</span><em
+                                            style="width: 25px;height: 10px;padding-left:10px;background: green;"></em>
+                                    </td> -->
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="content">
+                <div class="titles">
+                    <h5><b>风险等级说明</b></h5>
+                </div>
+                <!-- <div class="row">
+                    <div class="title">
+                        <h5><b>第一阶段</b>（20-03-22）</h5>
+                    </div>
+                    <table id="tables" class="table table-bordered" data-toggle="table" style="text-align: center;">
+                        <thead>
+                            <tr>
+                                <th style="text-align: center;">风险源</th>
+                                <th style="text-align: center;">顶层事故</th>
+                                <th style="text-align: center;">结果</th>
+                                <th style="text-align: center;">风险等级</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td rowspan="2">塔吊工程</td>
+                                <td>塔吊倾斜或倒塌(附着式和外挂/内爬式)</td>
+                                <td>5.69406e-2</td>
+                                <td>低风险</td>
+                            </tr>
+                            <tr>
+                                <td>塔吊倾斜或倒塌(附着式和外挂/内爬式)</td>
+                                <td>5.69406e-2</td>
+                                <td>低风险</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div> -->
+            </div>
+        </div>
+    </div>
+    <script>
+        var data = localStorage.getItem("data");
+        //proname protext
+        var proname = localStorage.getItem("proname");
+        var protext = localStorage.getItem("protext");
+        // console.log(proname, protext)
+        // console.log(JSON.parse(data))
+        $('.content>.titles h5 b').text(proname)
+        $('.explain>.titles').on("click", function () {
+            $('.explainlist').toggle();
+        })
+        var arr = JSON.parse(data);
+        var arr1 = {
+            "date": "2020-07-24 14:55:06",
+            "order": "第三阶段测试",
+            "table2": {
+                "临时支撑": [
+                    {
+                        "origin": 0.22883119292586876,
+                        "fengxian": "重大风险",
+                        "variety": "型钢支架变形或倒塌"
+                    }
+                ],
+                "主体结构、 消防": [
+                    {
+                        "origin": 0.0005376333954309588,
+                        "fengxian": "低风险",
+                        "variety": "火灾"
+                    },
+                    {
+                        "origin": 0.000008422783162026146,
+                        "fengxian": "低风险",
+                        "variety": "触电"
+                    }
+                ],
+                "塔吊工程": [
+                    {
+                        "origin": 0.0006014345276695881,
+                        "fengxian": "低风险",
+                        "variety": "塔壁碰撞"
+                    },
+                    {
+                        "origin": 0.0052951881299720975,
+                        "fengxian": "一般风险",
+                        "variety": "吊物坠落"
+                    },
+                    {
+                        "origin": 0.026609678591898958,
+                        "fengxian": "中等风险",
+                        "variety": "塔吊倾斜或倒塌(附着式)"
+                    },
+                    {
+                        "origin": 0.026609678591898958,
+                        "fengxian": "中等风险",
+                        "variety": "塔吊倾斜或倒塌(附着式)"
+                    }
+                ]
+            }
+        }
+        console.log(arr)
+        var html = '';
+        html += '<div class="row"><div class="title"><h5><b>' + arr1.order + '</b>（' + arr1.date +
+            '）</h5></div><table id="tables" class="table table-bordered" data-toggle="table" style="text-align: center;"><thead><tr><th style="text-align: center;">风险源</th><th style="text-align: center;">顶层事故</th><th style="text-align: center;">结果</th><th style="text-align: center;">风险等级</th></tr></thead><tbody>'
+
+        var table2 = arr1.table2;
+        console.log(table2)
+
+        $.each(table2, function (k, item) {
+            $.each(item, function (j, val) {
+                if (j == 0) {
+                    html += '<tr><td rowspan="' + item.length + '">' + k + '</td> <td>' + item[j].variety + '</td><td>' + item[j].origin + '</td><td>' + item[j].fengxian + '</td></tr>'
+                } else {
+                    html += '<tr><td>' + item[j].variety + '</td><td>' + item[j].origin + '</td><td>' + item[j].fengxian + '</td></tr>'
+                }
+            })
+        })
+        html += ' </tbody></table></div>'
+        $('.content').append(html)
+
+        // var table1 = [{
+        //     order: "第一阶段",
+        //     date: '2020-07-15',
+        //     table2: [{
+        //         kind: '塔吊工程',
+        //         table3: [{
+        //             variety: '塔吊倾斜或倒塌(附着式和外挂/内爬式)',
+        //             origin: '5.69406e-2	',
+        //             fenxian: "低风险"
+        //         }, {
+        //             variety: '塔吊倾斜或倒塌(附着式和外挂/内爬式)',
+        //             origin: '5.69406e-2	',
+        //             fenxian: "低风险"
+        //         }]
+        //     }, {
+        //         kind: '施工平台',
+        //         table3: [{
+        //             variety: '施工平台发生变形、倾斜或坍塌（爬模）',
+        //             origin: '5.69406e-2',
+        //             fenxian: "低风险"
+        //         }, {
+        //             variety: '施工平台发生变形、倾斜或坍塌（爬模）',
+        //             origin: '5.69406e-2',
+        //             fenxian: "低风险"
+        //         }]
+        //     }]
+        // }];
+        // var html = '';
+        // for (var i = 0; i < table1.length; i++) {
+        //     html += '<div class="row"><div class="title"><h5><b>' + table1[i].order + '</b>（' + table1[i].date +
+        //         '）</h5></div><table id="tables" class="table table-bordered" data-toggle="table" style="text-align: center;"><thead><tr><th style="text-align: center;">风险源</th><th style="text-align: center;">顶层事故</th><th style="text-align: center;">结果</th><th style="text-align: center;">风险等级</th></tr></thead><tbody>'
+        //     if (table1[i].table2 && table1[i].table2.length > 0) {
+        //         $.each(table1[i].table2, function (item, val) {
+        //             if (val.table3 && val.table3.length > 0) {
+        //                 $.each(val.table3, function (i, v) {
+        //                     // console.log(i,v)
+        //                     if (i == 0) {
+        //                         html += '<tr><td rowspan="' + val.table3.length +
+        //                             '">' + val.kind + '</td><td>' + v.variety + '</td><td>' + v
+        //                                 .origin + '</td><td>' + v.fenxian + '</td></tr>'
+        //                     } else {
+        //                         html += '<tr><td>' + v.variety + '</td><td>' + v.origin +
+        //                             '</td><td>' + v.fenxian + '</td></tr>'
+        //                     }
+        //                 })
+        //             } else {
+        //                 html += '<tr><td>' + val.kind + '</td><td></td><td></td><td></td></tr>'
+        //             }
+        //         })
+        //     }
+        //     html += ' </tbody></table></div>'
+        // };
+        // console.log(html)
+        // $('.content').append(html)
+    </script>
+</body>
+
+</html>

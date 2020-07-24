@@ -1,0 +1,65 @@
+body {
+    background: rgb(245, 245, 245);
+}
+.container-fluid{
+    overflow: hidden;
+}
+.header {
+    position: relative;
+}
+
+.middle {
+    height: 850px;
+    background: #fff;
+    border: 1px rgb(235, 235, 235) solid;
+    border-radius: 2px;
+    margin-bottom: 15px;
+    list-style: none;
+    position: relative;
+    overflow-y:scroll ;
+}
+
+.explain{
+    max-height: 500px;
+    cursor:pointer;
+}
+.explainlist{
+    display: none;
+    margin-top: 20px;
+}
+#col,.red{
+    width: 150px;
+    text-align: center;
+}
+.red span{
+    padding-right: 10px;
+}
+.rows{
+    margin: 15px ;
+}
+.row{
+    margin: 15px ;
+}
+.titles h5 span{
+    padding-left: 10px;
+    color: #fda714;
+    /* font-size: 16px; */
+}
+.title{
+    background: rgb(245, 245, 245);
+    border: 1px rgb(235, 235, 235) solid;
+    border-radius: 2px;
+    margin-bottom: 5px;
+    list-style: none;
+    position: relative;
+}
+.title h5{
+    color: rgb(103, 106, 108);
+    padding-left: 10px;
+}
+.content>.titles{
+    margin-left:15px ;
+}
+.hide {
+    display: none;
+}

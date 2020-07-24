@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>项目风险评估</title>
+	<!-- <link rel="stylesheet" href="css/bootstrap.min.css" /> -->
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css"
+		integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+	<!-- <link href="https://cdn.bootcdn.net/ajax/libs/bootstrap-select/2.0.0-beta1/css/bootstrap-select.min.css" 
+	rel="stylesheet">-->
+	<link href="css/bootstrap-treeview.css" rel="stylesheet">
+	<link href="https://lib.baomitu.com/awesome-bootstrap-checkbox/1.0.2/awesome-bootstrap-checkbox.min.css"
+		rel="stylesheet">
+	<link rel="stylesheet" href="css/index.css">
+	<script src="https://cdn.bootcdn.net/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+	<script src="js/bootstrap-treeview.js"></script>
+	<!-- <script src="js/bootstrap-select.js"></script> -->
+	<!-- <script src="https://cdn.bootcdn.net/ajax/libs/bootstrap-select/2.0.0-beta1/js/bootstrap-select.js"></script> -->
+
+</head>
+
+<body>
+	<div class="container-fluid">
+		<div class="header">
+			<div class="top-left">
+				<h5>
+					<span class="glyphicon glyphicon-home"></span>
+					项目风险评估
+					<small class="glyphicon glyphicon-chevron-right" style="margin:0 3px;"></small>
+					<small>
+						抗力实施评估
+					</small>
+				</h5>
+			</div>
+			<div class="top-rig">
+				<button type="button" class="btn btn-xs btn-primary produce"><span class="glyphicon glyphicon-file" aria-hidden="true"></span>生成报告</button>
+				<button type="button" class="btn btn-xs btn-primary down"><span class="glyphicon glyphicon-save" aria-hidden="true"></span>下载</button>
+			</div>
+		</div>
+		<div class="pullDown">
+			<div class="sel1">
+				<span>项目名称：</span>
+				<select class="selectpicker1" id="projectType" width="80px">
+					<!--<option>请输入</option>-->
+				</select>
+			</div>
+			<div class="sel2">
+				<span>项目阶段：</span>
+				<select class="selectpicker2">
+					<!--<option>请输入</option>-->
+				</select>
+			</div>
+		</div>
+		<div class="middle">
+			<div class="row">
+				<div class="col-md-11 col-md-push-1">
+					<ul class="norm">
+						<li>1分：<span>该项目的风险抗力实施水平明显低于行业内超高层项目的平均水平</span></li>
+						<li>2分：<span>该项目的风险抗力实施水平略低于行业内超高层项目的平均水平</span></li>
+						<li>3分：<span>该项目的风险抗力实施水平与行业内超高层项目的平均水平基本一致</span></li>
+						<li>4分：<span>该项目的风险抗力实施水平略高于行业内超高层项目的平均水平</span></li>
+						<li>5分：<span>该项目的风险抗力实施水平明显高于行业内超高层项目的平均水平</span></li>
+					</ul>
+				</div>
+				<div class="col-md-1 col-md-pull-11 normtit">抗力打分标准</div>
+				<div class="fix" style="position: absolute; top: 45px; right: 20px;">
+					<button type="button" class="btn btn-sm btn-warning calculate">开始计算</button>
+				</div>
+			</div>
+		</div>
+		<div class="bottom">
+			<div class="row">
+				<div class="col-md-2 tree">
+					<div id="treeview11" class="test"></div>
+				</div>
+				<div class="col-md-10 treelist">
+					<table id="tables" class="table table-bordered" data-toggle="table" style="text-align: center;">
+						<thead>
+							<tr class="active">
+								<th style="text-align: center;">类型</th>
+								<th style="text-align: center;">抗力</th>
+								<th style="text-align: center;">现场得分</th>
+							</tr>
+						</thead>
+						<tbody>
+							<!-- <tr>
+								<td>塔吊工程</td>
+								<td>进行空载/重载实验</td>
+								<td>
+									<label class="radio-inline">
+										<input type="radio" name="tadiao1" id="inlineRadio1" value="option1">
+										1
+									</label>
+									<label class="radio-inline">
+										<input type="radio" name="tadiao1" id="inlineRadio2" value="option2">
+										2
+									</label>
+									<label class="radio-inline">
+										<input type="radio" name="tadiao1" id="inlineRadio3" value="option3">
+										3
+									</label>
+									<label class="radio-inline">
+										<input type="radio" name="tadiao1" id="inlineRadio3" value="option3">
+										4
+									</label>
+									<label class="radio-inline">
+										<input type="radio" name="tadiao1" id="inlineRadio3" value="option3">
+										5
+									</label>
+								</td>
+							</tr> -->
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+		<div class="mask hide">
+			<div class="prompt_box">
+				<div class="prompt_title">
+					<h3>系统提示</h3>
+					<span class="idel">X</span>
+				</div>
+				<div class="prompt_cont">
+					<p class="prompt_text"></p>
+					<span class="prompt_sure">确定</span>
+				</div>
+			</div>
+
+		</div>
+	</div>
+</body>
+
+<!-- <script src="js/sweetalert.js"></script> -->
+<script>
+	// var host = window.location.host;
+	// console.log(host)
+	var host = "http://192.168.4.132:9081";
+	var propk = "";//项目pk
+	var stage = "";//阶段
+	var stagepk = "";//阶段pk
+	var stageName="";
+	var text = "";//类型
+	var userCode = GetQueryString('user_code');
+	function GetQueryString(name) {
+		var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+		var r = window.location.search.substr(1).match(reg); //获取url中"?"符后的字符串并正则匹配
+		var context = "";
+		if (r != null)
+			context = r[2];
+		reg = null;
+		r = null;
+		return context == null || context == "" || context == "undefined" ? "" : context;
+	}
+	window.onload = function () {
+		$.ajax({
+			url: host +"/service/security?method=projects&user_code=" + userCode,
+			type: 'get',
+			dataType: 'json',
+			success: function (data) {
+				// console.log(data)
+				var arr = data.data;
+				for (var i = 0; i < arr.length; i++) {
+					var option = document.createElement("option");
+					// $("#projectType").prepend("<option value='0'>请选择</option>")
+					$("#projectType").append("<option value='" + arr[i].pk + "'>" + arr[i].name + "</option>");
+					// option.value = arr[i].pk;
+					// option.innerText = arr[i].name;
+					// add.append(option);
+				}
+				// //使用refresh方法更新UI以匹配新状态。
+				// $('.selectpicker1').selectpicker('refresh');
+				// //render方法强制重新渲染引导程序 - 选择ui。
+				// $('.selectpicker1').selectpicker('render');
+				$(".selectpicker1").change(function () {
+					if (this.innerHTML == '请输入') {
+						return;
+					} else {
+						var proname = $(".selectpicker1 option:selected").text();
+						localStorage.setItem("proname", proname);
+						propk = $(".selectpicker1").val();
+					}
+					selcont(propk)
+				});
+				$(".selectpicker1 option").eq(0).attr("selected",true)
+				$(".selectpicker1").change()
+
+			}
+		});
+		//获取到selectpicker1
+		// $('#projectType').on('changed.bs.select', function (e, clickedIndex, isSelected, previousValue) {
+		// 	console.log($(".selectpicker1").val(),clickedIndex, isSelected,previousValue,"获取到的值")
+		// 	propk = $(".selectpicker1").val();
+		// 	console.log(propk)
+		// 	selcont(propk)
+		// });
+		// $('#projectType').on('change', function () {
+		// 	console.log($(".selectpicker1").val())
+		// })
+		
+		//获取项目阶段的数据 
+		function selcont(v) {
+			// console.log(v)
+			// $('.selectpicker2').val('')
+			$.ajax({
+				url: host +"/service/security?method=kl&project=" + v,
+				type: 'get',
+				dataType: 'json',
+				success: function (data) {
+					// var data = JSON.parse(data)
+					var arr = data.data;
+					// console.log(arr)
+					// $.each(arr, function (i, t) {
+					// 	console.log(i, t)
+					// })
+					for (var i = 0; i < arr.length; i++) {
+						var obj = arr[i].info;
+						$(".selectpicker2").append("<option value='" + arr[i].stagepk + "' index='"+i+"'>" + arr[i].stage + "</option>");
+					}
+					selright(arr);
+					// //使用refresh方法更新UI以匹配新状态。
+					// $('.selectpicker2').selectpicker('refresh');
+					// //render方法强制重新渲染引导程序 - 选择ui。
+					// $('.selectpicker2').selectpicker('render');
+				}
+			});
+		}
+		var clickIndex=0,xmJ=null;
+		function selright(arr) {
+			//获取到selectpicker2的值 
+			$(".selectpicker2").change(function () {
+				var index=$(".selectpicker2 option:selected").attr("index");
+				stageName = $(".selectpicker2 option:selected").text();
+				stagepk = $(".selectpicker2").val()
+				localStorage.setItem("protext", stageName);
+				stage = $(".selectpicker2").val();
+				xmJ=arr[index].info;
+				$.each(xmJ, function(key,val) {
+					$.each(val.kls, function(key1,val1) {
+						if(!val1.value){
+							val1.value=3
+						}
+					});
+				});
+				// 树左侧数据
+				$('#treeview11').treeview({
+					color: "#428bca",
+					data: xmJ,
+					nodeIcon: '',//自定义图标
+					onNodeSelected: function (event, node) {
+						clickIndex=node.nodeId
+						bottomcont(xmJ[clickIndex].kls, xmJ[clickIndex].text, stagepk)
+						// $('#event_output').prepend('<p>您单击了 ' + node.text + '</p>');
+					}
+				});
+				bottomcont(xmJ[clickIndex].kls, xmJ[clickIndex].text, stagepk)
+			});
+			$(".selectpicker2 option").eq(0).attr("selected",true);
+			$(".selectpicker2").change()
+		}
+
+		//关闭X
+		$('.idel').click(function () {
+			$('.mask').addClass('hide');
+		})
+
+		//生成报告
+		$(".produce").on("click", function () {
+			// console.log('生成报告')
+		})
+
+		//下载
+		$(".down").on("click", function () {
+			// console.log('下载')
+		})
+
+		function bottomcont(list, text, stagepk) {
+			// console.log(list)
+//			text = text;
+			// console.log(propk,stage,stagepk,text)
+			var userTableStr = '';
+			for (var i = 0; i < list.length; i++) {
+				userTableStr += '<tr><td>' 
+				userTableStr += list[i].dcname + '</td><td>'
+				userTableStr += list[i].name + '</td><td class="radioList" id='+ list[i].name + i + '>'
+				if(list[i].value==1){
+						userTableStr += '<label class="radio-inline"><input type="radio" names='+ list[i].pk + ' name='+ list[i].pk +i+' value="1" checked>1</label>'
+				}else{
+						userTableStr += '<label class="radio-inline"><input type="radio" names='+ list[i].pk + ' name='+ list[i].pk +i+' value="1">1</label>'
+				}
+				if(list[i].value==2){
+						userTableStr += '<label class="radio-inline"><input type="radio" names='+ list[i].pk + ' name='+ list[i].pk +i+' value="2" checked>2</label>'
+				}else{
+						userTableStr += '<label class="radio-inline"><input type="radio" names='+ list[i].pk + ' name='+ list[i].pk +i+' value="2">2</label>'
+				}
+				if(list[i].value==3){
+						userTableStr += '<label class="radio-inline"><input type="radio" names='+ list[i].pk + ' name='+ list[i].pk +i+' value="3" checked>3</label>'
+				}else{
+						userTableStr += '<label class="radio-inline"><input type="radio" names='+ list[i].pk + ' name='+ list[i].pk +i+' value="3">3</label>'
+				}
+				if(list[i].value==4){
+						userTableStr += '<label class="radio-inline"><input type="radio" names='+ list[i].pk + ' name='+ list[i].pk +i+' value="4" checked>4</label>'
+				}else{
+						userTableStr += '<label class="radio-inline"><input type="radio" names='+ list[i].pk + ' name='+ list[i].pk +i+' value="4">4</label>'
+				}
+				if(list[i].value==5){
+						userTableStr += '<label class="radio-inline"><input type="radio" names='+ list[i].pk + ' name='+ list[i].pk +i+' value="5" checked>5</label>'
+				}else{
+						userTableStr += '<label class="radio-inline"><input type="radio" names='+ list[i].pk + ' name='+ list[i].pk +i+' value="5">5</label>'
+				}
+				userTableStr += '</td></tr>';
+			}
+			$('#tables>tbody').html(userTableStr);
+			//radio
+			$('input[type="radio"]').change(function(){
+				var num =$(this).val();
+				var pk=$(this).attr('names');
+				var index=xmJ[clickIndex].kls.findIndex(function(val){
+					return val.pk==pk
+				})
+				xmJ[clickIndex].kls[index].value=num;
+			})
+			//开始计算
+			$('.calculate').unbind('click').click(function () {
+				var obj = {
+					"score": xmJ,
+					"projectID": propk,
+					"stageID": stage,
+					"stageName":stageName
+				}
+				console.log(obj)
+				$.ajax({
+					url: host + "/service/calculation",
+					type: 'post',
+					dataType: 'json',
+					data: JSON.stringify(obj),
+					success: function (res) {
+						console.log(res, '返回的数据')
+						if (res.result == true) {
+							$(".mask").removeClass('hide');
+							console.log(res.data)
+							localStorage.setItem("data", JSON.stringify(res.data));
+							$('.prompt_text').text('现在开始计算分数~');
+							$('.prompt_sure').click(function () {
+								$('.mask').addClass('hide');
+								location.href = "result.html"
+							})
+						}else{
+							alert("没有返回值")
+						}
+					}
+				});
+				
+				
+			})
+		}
+
+	}
+
+	//打分默认禁用
+	// $('#tables>tbody>tr>.radioList>.radio-inline>input').attr("disabled", "disabled")
+	
+	//兼容IE
+	if (!Array.prototype.findIndex) {
+	  Object.defineProperty(Array.prototype, 'findIndex', {
+	    value: function(predicate) {
+	      if (this == null) {
+	        throw new TypeError('"this" is null or not defined');
+	      }
+	      var o = Object(this);
+	      var len = o.length >>> 0;
+	      if (typeof predicate !== 'function') {
+	        throw new TypeError('predicate must be a function');
+	      }
+	      var thisArg = arguments[1];
+	      var k = 0;
+	      while (k < len) {
+	        var kValue = o[k];
+	        if (predicate.call(thisArg, kValue, k, o)) {
+	          return k;
+	        }
+	        k++;
+	      }
+	      return -1;
+	    }
+	  });
+	}
+
+</script>
+
+</html>
