@@ -1,6 +1,12 @@
 body {
     background: rgb(245, 245, 245);
 }
+aside, blockquote, body, button, dd, div, dl, dt, fieldset, figure, form, h1, h2, h3, h4, h5, h6, header, hr, input, label, legend, li, main, menu, nav, ol, p, pre, section, select, td, textarea, th, ul{
+	margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    vertical-align: top;
+}
 .container-fluid{
     width: 100%;
     height: 100%;
@@ -18,8 +24,9 @@ body {
     right: 20px;
 }
 .pullDown {
+    width: 100%;
     height: 60px;
-    line-height: 60px;
+    /* line-height: 60px; */
     background: #fff;
     border: 1px rgb(235, 235, 235) solid;
     border-radius: 2px;
@@ -28,17 +35,20 @@ body {
     position: relative;
 }
 .sel1{
+    padding: 20px;
     float: left;
-    padding-left:20px ;
+    /* padding-left:20px ; */
     /* padding-top: 20px; */
 }
-.selectpicker1,.selectpicker2{
+.sel2,.sel3,.sel4{
+    padding: 20px;
+    float: left;
+    padding-left:30px ;
+}
+.selectpicker1,.selectpicker2,.selectpicker3,.selectpicker4{
     width: 230px;
 }
-.sel2{
-    float: left;
-    padding-left:40px ;
-}
+
 .middle {
     height: 126px;
     background: #fff;
@@ -83,6 +93,7 @@ body {
 
 .bottom>.row {
     margin-top: 10px;
+    overflow:auto;
     height: 100%;
 }
 
@@ -243,5 +254,141 @@ input{
     left: 47%;
     z-index: 9999;
 }
+#main table{
+	width: 100%;
+	text-align: center;
+	position: relative;
+}
+#main table td{
+	padding-bottom: 24px;
+}
+.bottomTd{
+	position: relative;
+}
+.bottomTd:after{
+	content: "";
+    position: absolute;
+    top: -15px;
+    left: 0;
+    right: 0;
+    height: 15px;
+    border-top: 2px solid #ccc;
+}
 
-
+.bottomTd:first-child:after{
+	content: "";
+	position: absolute;
+	left: 50%;
+    height: 15px;
+    right: 0;
+    top: -15px;
+    border: 2px solid;
+    border-color: #ccc transparent transparent #ccc;
+    border-radius: 6px 0 0 0;
+    transform: translate3d(1px,0,0);
+}
+.bottomTd.only:after,.bottomTd:first-child:before,.bottomTd:last-child:before{
+	display: none;
+}
+.bottomTd:last-child:after{
+	content: "";
+	position: absolute;
+	right: 50%;
+    height: 15px;
+    left: 0;
+    top: -15px;
+    border: 2px solid;
+    border-color: #ccc #ccc transparent transparent;
+    border-radius:  0 6px 0 0;
+    transform: translate3d(1px,0,0);
+}
+.tree_box{
+	width:120px;
+	height:120px;
+}
+.tree_box.level1{
+	width:120px;
+	height:120px;
+	position: relative;
+}
+.tree_box:after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    bottom: 60px;
+    height: 23px;
+    border-left: 2px solid #ccc;
+    transform: translate3d(-1px,0,0);
+}
+.tree_box.level1:after{
+	bottom:37px;
+}
+.tree_box .tree_rect{
+	width:120px;
+	height:60px;
+	border: 1px solid #ccc;
+	background: rgb(103, 194, 58);
+	position: relative;
+}
+.tree_box.level1 .tree_rect{
+	
+	background: rgb(220, 53, 69);
+}
+.bottomTd:before{
+	content: "";
+    position: absolute;
+     height: 13px;
+     top: -13px;
+    border-left: 2px solid #ccc;
+   	left: 50%;
+    transform: translate3d(-1px,0,0);
+}
+.tree_name{
+	position: absolute;
+	width: 80%;
+	left: 50%;
+	top: 50%;
+	transform:translate(-50%,-50%);
+}
+.tree_box img{
+	position: absolute;
+	left: 0;
+	right: 0;
+	bottom:-134px;
+	margin: auto;
+}
+.tree_box.level1 img{
+	position: absolute;
+	left: 0;
+	right: 0;
+	bottom:-134px;
+	margin: auto;
+}
+.tree_box.level1 .tree_rect:after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    bottom: -70px;
+    height: 20px;
+    border-left: 2px solid #ccc;
+    transform: translate3d(-1px,0,0);
+}
+.tree_box .tree_rect:after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    bottom: -72px;
+    height: 20px;
+    border-left: 2px solid #ccc;
+    transform: translate3d(-1px,0,0);
+}
+.tree_box.hasChildF:after,.tree_box.hasChildF .tree_rect:after{
+	display: none !important;
+}
+.tree_box.hasChildF .tree_rect{
+	width: 110px;
+	height: 110px;
+	background:rgb(255, 193, 7);
+	padding: 15px;
+	border-radius: 50%;
+}

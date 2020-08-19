@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>项目风险评估</title>
+		<link rel="stylesheet" href="css/bootstrap.min.css">
+		<link rel="stylesheet" href="css/awesome-bootstrap-checkbox.min.css">
+		<link href="css/bootstrap-treeview.css" rel="stylesheet">
+		<link rel="stylesheet" href="css/risk.css">
+
+		<link rel="stylesheet" type="text/css" href="css/result.css" />
+		<script src="js/jquery-1.9.1.min.js"></script>
+
+		<script src="js/spin.min.js"></script>
+
+		<script src="js/bootstrap.min.js"></script>
+
+		<script src="js/bootstrap-treeview.js"></script>
+
+	</head>
+
+	<body>
+		<div class="container-fluid">
+			<div class="header">
+				<div class="top-left">
+				</div>
+			</div>
+			<div class="pullDown">
+				<div class="sel1">
+					<span>项目名称：</span>
+					<select class="selectpicker1" id="projectType" width="80px"></select>
+				</div>
+				<div class="sel2">
+					<span>项目阶段：</span>
+					<select class="selectpicker2"></select>
+				</div>
+				<div class="sel3">
+					<span>风险源类型：</span>
+					<select class="selectpicker3"></select>
+				</div>
+				<div class="sel4">
+					<span>顶层事故：</span>
+					<select class="selectpicker4"></select>
+				</div>
+			</div>
+			<div class="bottom">
+				<div class="row">
+					<div id="main" class="center-block"></div>
+				</div>
+			</div>
+			<div class="mask hide">
+				<div id="firstDiv">
+				</div>
+			</div>
+			<div class="masks hide">
+				<div class="prompt_box">
+					<div class="prompt_title">
+						<h3>系统提示</h3>
+						<span class="idel">X</span>
+					</div>
+					<div class="prompt_cont">
+						<p class="prompt_text">计算出错，请稍后重试，或联系管理员处理！</p>
+						<span class="prompt_sure">确定</span>
+					</div>
+				</div>
+
+			</div>
+		</div>
+	</body>
+	<script>
+		var host = "http://192.168.4.134:6083";
+		var userCode = GetQueryString('user_code');
+
+		function GetQueryString(name) {
+			var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+			var r = window.location.search.substr(1).match(reg); //获取url中"?"符后的字符串并正则匹配
+			var context = "";
+			if(r != null)
+				context = r[2];
+			reg = null;
+			r = null;
+			return context == null || context == "" || context == "undefined" ? "" : context;
+		}
+		window.onload = function() {
+			$.ajax({
+				url: host + "/service/security?method=projects&user_code=" + userCode,
+				type: 'get',
+				dataType: 'json',
+				success: function(data) {
+					var arr = data.data;
+					// console.log(arr)
+					for(var i = 0; i < arr.length; i++) {
+						$("#projectType").append("<option value='" + arr[i].pk + "'>" + arr[i].name + "</option>");
+						
+					}
+					$(".selectpicker1").change(function() {
+						if(this.innerHTML == '请输入') {
+							return;
+						} else {
+							propk = $(".selectpicker1").val();
+						}
+						selcont(arr[0].pk)
+						// console.log(arr[0].pk)
+					});
+					$(".selectpicker1 option").eq(0).attr("selected", true)
+					$(".selectpicker1").change()
+
+				}
+			});
+			//获取项目阶段的数据 
+			function selcont(v) {
+				$.ajax({
+					url: host + "/service/security?method=fxy&project=" + v,
+					type: 'get',
+					dataType: 'json',
+					success: function(res) {
+						// console.log(res)
+						var arr = res.data;
+						// console.log(arr)
+						$(".selectpicker2").html("")
+						for(var i = 0; i < arr.length; i++) {
+							var obj = arr[i].info;
+							$(".selectpicker2").append("<option value='" + arr[i].jdname + "' index='" + i + "'>" + arr[i].jdname + "</option>");
+						}
+						selcontype(arr[0].jdlist)
+						$(".selectpicker2").unbind("change").change(function() {
+							var index = $(this).children('option:selected').index();
+							selcontype(arr[index].jdlist)
+						})
+
+					}
+				});
+			}
+
+			function selcontype(list) {
+				$(".selectpicker3").html('');
+				for(var i = 0; i < list.length; i++) {
+					$(".selectpicker3").append("<option value='" + list[i].tpname + "' index='" + i + "'>" + list[i].tpname + "</option>");
+				}
+				selconAccident(list[0].tplist)
+				$(".selectpicker3").unbind("change").change(function() {
+					var index = $(this).children('option:selected').index();
+					selconAccident(list[index].tplist);
+				})
+			}
+
+			function selconAccident(acc) {
+				$(".selectpicker4").html('');
+				for(var i = 0; i < acc.length; i++) {
+					$(".selectpicker4").append("<option value='" + acc[i].dcname + "' index='" + i + "'>" + acc[i].dcname + "</option>");
+				}
+				$(".selectpicker4").unbind("change").change(function() {
+					var index = $(this).children('option:selected').index();
+					var list = acc[index].dclist;
+
+					var tree = toTree(list);
+					// console.log(tree)
+					str = "";
+					setDom(tree);
+					$("#main").html(str);
+					var length = $(".hasChildF").length;
+					$("#main").css({
+						width: 120 * length + "px"
+					})
+				})
+				var list = acc[0].dclist;
+				var tree = toTree(list);
+				str = "";
+				setDom(tree);
+				$("#main").html(str);
+				var length = $(".hasChildF").length;
+				$("#main").css({
+					width: 120 * length + "px"
+				})
+			}
+			var clientHeight = $(window).height();
+			var botHeight = clientHeight - 100 + 'px';
+			$('.bottom').css('height', botHeight)
+			botHeight = clientHeight - 52 + 'px';
+			$('.result>.middle').css('height', botHeight);
+		}
+
+		function toTree(array) {
+			var result = []
+			$.each(array, function(key, item) {
+				item.children = undefined
+			})
+			var map = {}
+			$.each(array, function(key, item) {
+				map[item.pk] = item
+			})
+			$.each(array, function(key, item) {
+				var parent = map[item.parentpk]
+				if(parent) {
+					(parent.children || (parent.children = [])).push(item)
+				} else {
+					result.push(item)
+				}
+			})
+			return result
+		}
+		var str = ""
+
+		function setDom(treenode) {
+			str += "<table><tr>"
+			for(var i in treenode) {
+				var imgDom = '';
+				var bottomTd = '';
+				var hasChild = "F";
+				var only='';
+				if(treenode.length==1){
+					only='only'
+				}
+				if(treenode[i].children) {
+					hasChild = "T";
+					
+				}
+				
+				var isorn = '<img src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9Im5vIj8+DQo8IURPQ1RZUEUgc3ZnIFBVQkxJQyAiLS8vVzNDLy9EVEQgU1ZHIDEuMS8vRU4iICJodHRwOi8vd3d3LnczLm9yZy9HcmFwaGljcy9TVkcvMS4xL0RURC9zdmcxMS5kdGQiPg0KPCEtLSDnlLEgTWljcm9zb2Z0IFZpc2lvLCBTVkcgRXhwb3J0IOeUn+aIkCAxLnN2ZyDpobUtMSAtLT4NCjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgeG1sbnM6ZXY9Imh0dHA6Ly93d3cudzMub3JnLzIwMDEveG1sLWV2ZW50cyINCgkJeG1sbnM6dj0iaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS92aXNpby8yMDAzL1NWR0V4dGVuc2lvbnMvIiB3aWR0aD0iMC4yOTkxNzdpbiIgaGVpZ2h0PSIwLjI5OTE3N2luIg0KCQl2aWV3Qm94PSIwIDAgMjEuNTQwOCAyMS41NDA4IiB4bWw6c3BhY2U9InByZXNlcnZlIiBjb2xvci1pbnRlcnBvbGF0aW9uLWZpbHRlcnM9InNSR0IiIGNsYXNzPSJzdDIiPg0KCTx2OmRvY3VtZW50UHJvcGVydGllcyB2OmxhbmdJRD0iMjA1MiIgdjptZXRyaWM9InRydWUiIHY6dmlld01hcmt1cD0iZmFsc2UiLz4NCg0KCTxzdHlsZSB0eXBlPSJ0ZXh0L2NzcyI+DQoJPCFbQ0RBVEFbDQoJCS5zdDEge2ZpbGw6I2ZmZmZmZjtzdHJva2U6IzAwMDAwMDtzdHJva2UtbGluZWNhcDpyb3VuZDtzdHJva2UtbGluZWpvaW46cm91bmQ7c3Ryb2tlLXdpZHRoOjAuMjR9DQoJCS5zdDIge2ZpbGw6bm9uZTtmaWxsLXJ1bGU6ZXZlbm9kZDtmb250LXNpemU6MTJweDtvdmVyZmxvdzp2aXNpYmxlO3N0cm9rZS1saW5lY2FwOnNxdWFyZTtzdHJva2UtbWl0ZXJsaW1pdDozfQ0KCV1dPg0KCTwvc3R5bGU+DQoNCgk8ZyB2Om1JRD0iMCIgdjppbmRleD0iMSIgdjpncm91cENvbnRleHQ9ImZvcmVncm91bmRQYWdlIj4NCgkJPHRpdGxlPumhtS0xPC90aXRsZT4NCgkJPHY6cGFnZVByb3BlcnRpZXMgdjpkcmF3aW5nU2NhbGU9IjAuMDM5MzcwMSIgdjpwYWdlU2NhbGU9IjAuMDM5MzcwMSIgdjpkcmF3aW5nVW5pdHM9IjI0IiB2OnNoYWRvd09mZnNldFg9IjguNTAzOTQiDQoJCQkJdjpzaGFkb3dPZmZzZXRZPSItOC41MDM5NCIvPg0KCQk8djpsYXllciB2Om5hbWU9Iua1geeoi+WbviIgdjppbmRleD0iMCIvPg0KCQk8ZyBpZD0ic2hhcGU0LTEiIHY6bUlEPSI0IiB2Omdyb3VwQ29udGV4dD0ic2hhcGUiIHY6bGF5ZXJNZW1iZXI9IjAiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDAuMTIsLTAuMTIpIj4NCgkJCTx0aXRsZT5BTkQg6ZeoLjMzPC90aXRsZT4NCgkJCTx2OnVzZXJEZWZzPg0KCQkJCTx2OnVkIHY6bmFtZVU9InZpc1ZlcnNpb24iIHY6cHJvbXB0PSIiIHY6dmFsPSJWVDAoMTUpOjI2Ii8+DQoJCQk8L3Y6dXNlckRlZnM+DQoJCQk8cGF0aCBkPSJNMjEuMyAyMS41NCBBMTkuNjcyNCA2LjY0MTg3IC0xMDIuOTYgMCAwIDEwLjY1IDAuMjQgQTE4LjkyNDcgNi4wMjk5MyAtNzYuMDMgMCAwIDAgMjEuNTQgQTMyLjgzODcgMzIuODM4NyAwIDANCgkJCQkJCSAxIDIxLjMgMjEuNTQgWiIgY2xhc3M9InN0MSIvPg0KCQk8L2c+DQoJPC9nPg0KPC9zdmc+DQo=" alt="" srcset="">'
+				var isory = '<img src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9Im5vIj8+DQo8IURPQ1RZUEUgc3ZnIFBVQkxJQyAiLS8vVzNDLy9EVEQgU1ZHIDEuMS8vRU4iICJodHRwOi8vd3d3LnczLm9yZy9HcmFwaGljcy9TVkcvMS4xL0RURC9zdmcxMS5kdGQiPg0KPCEtLSDnlLEgTWljcm9zb2Z0IFZpc2lvLCBTVkcgRXhwb3J0IOeUn+aIkCDmlrDlu7ogTWljcm9zb2Z0IFZpc2lvIOe7mOWbvi5zdmcg6aG1LTEgLS0+DQo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHhtbG5zOmV2PSJodHRwOi8vd3d3LnczLm9yZy8yMDAxL3htbC1ldmVudHMiDQoJCXhtbG5zOnY9Imh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vdmlzaW8vMjAwMy9TVkdFeHRlbnNpb25zLyIgd2lkdGg9IjAuMjk5MTc3aW4iIGhlaWdodD0iMC4yOTkxNzdpbiINCgkJdmlld0JveD0iMCAwIDIxLjU0MDggMjEuNTQwOCIgeG1sOnNwYWNlPSJwcmVzZXJ2ZSIgY29sb3ItaW50ZXJwb2xhdGlvbi1maWx0ZXJzPSJzUkdCIiBjbGFzcz0ic3QyIj4NCgk8djpkb2N1bWVudFByb3BlcnRpZXMgdjpsYW5nSUQ9IjIwNTIiIHY6bWV0cmljPSJ0cnVlIiB2OnZpZXdNYXJrdXA9ImZhbHNlIi8+DQoNCgk8c3R5bGUgdHlwZT0idGV4dC9jc3MiPg0KCTwhW0NEQVRBWw0KCQkuc3QxIHtmaWxsOiNmZmZmZmY7c3Ryb2tlOiMwMDAwMDA7c3Ryb2tlLWxpbmVjYXA6cm91bmQ7c3Ryb2tlLWxpbmVqb2luOnJvdW5kO3N0cm9rZS13aWR0aDowLjI0fQ0KCQkuc3QyIHtmaWxsOm5vbmU7ZmlsbC1ydWxlOmV2ZW5vZGQ7Zm9udC1zaXplOjEycHg7b3ZlcmZsb3c6dmlzaWJsZTtzdHJva2UtbGluZWNhcDpzcXVhcmU7c3Ryb2tlLW1pdGVybGltaXQ6M30NCgldXT4NCgk8L3N0eWxlPiANCgk8ZyB2Om1JRD0iMCIgdjppbmRleD0iMSIgdjpncm91cENvbnRleHQ9ImZvcmVncm91bmRQYWdlIj4NCgkJPHRpdGxlPumhtS0xPC90aXRsZT4NCgkJPHY6cGFnZVByb3BlcnRpZXMgdjpkcmF3aW5nU2NhbGU9IjAuMDM5MzcwMSIgdjpwYWdlU2NhbGU9IjAuMDM5MzcwMSIgdjpkcmF3aW5nVW5pdHM9IjI0IiB2OnNoYWRvd09mZnNldFg9IjguNTAzOTQiDQoJCQkJdjpzaGFkb3dPZmZzZXRZPSItOC41MDM5NCIvPg0KCQk8djpsYXllciB2Om5hbWU9Iua1geeoi+WbviIgdjppbmRleD0iMCIvPg0KCQk8ZyBpZD0ic2hhcGUxLTEiIHY6bUlEPSIxIiB2Omdyb3VwQ29udGV4dD0ic2hhcGUiIHY6bGF5ZXJNZW1iZXI9IjAiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDAuMTIsLTAuMTIpIj4NCgkJCTx0aXRsZT5BTkQg6ZeoLjQ1PC90aXRsZT4NCgkJCTx2OnVzZXJEZWZzPg0KCQkJCTx2OnVkIHY6bmFtZVU9InZpc1ZlcnNpb24iIHY6cHJvbXB0PSIiIHY6dmFsPSJWVDAoMTUpOjI2Ii8+DQoJCQk8L3Y6dXNlckRlZnM+DQoJCQk8cGF0aCBkPSJNMjEuMyAxMC44OSBBMTAuNjUwNCAxMC42NTA0IC0xODAgMCAwIDEwLjY1IDAuMjQgQTEwLjY1MDQgMTAuNjUwNCAtMTgwIDAgMCAwIDEwLjg5IEwwIDIxLjU0IEwyMS4zIDIxLjU0IEwyMS4zDQoJCQkJCQkgMTAuODkgWiIgY2xhc3M9InN0MSIvPg0KCQk8L2c+DQoJPC9nPg0KPC9zdmc+IA==" alt="" srcset="">'
+				if(hasChild == "F") {
+					imgDom = ""
+				} else {
+					imgDom = (treenode[i].isor == "Y" ? isory : isorn);
+				}
+				if(treenode[i].level > 1 && hasChild == "T") {
+					bottomTd = 'bottomTd'
+				}
+				str += "<td class='bottomTd "+only+"'><div class='tree_box center-block level" + treenode[i].level + " hasChild" + hasChild + "' ><div class='tree_rect'><div class='tree_name'>" + treenode[i].name + "</div>" + imgDom + "</div></div></td>";
+
+			}
+			str += "</tr><tr class='tr_2'>";
+			for(var i in treenode) {
+				str += "<td>"
+				if(treenode[i].children) {
+					setDom(treenode[i].children);
+				}
+				str += "</td>"
+			}
+			str += "</tr></table>"
+		}
+	</script>
+
+</html>

@@ -5,20 +5,27 @@
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>项目风险评估</title>
-	<!-- <link rel="stylesheet" href="css/bootstrap.min.css" /> -->
-	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css"
+	<!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css"
 		integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-	<!-- <link href="https://cdn.bootcdn.net/ajax/libs/bootstrap-select/2.0.0-beta1/css/bootstrap-select.min.css" 
-	rel="stylesheet">-->
+		 -->
+	<link rel="stylesheet" href="css/bootstrap.min.css">
+	<link rel="stylesheet" href="css/awesome-bootstrap-checkbox.min.css">
 	<link href="css/bootstrap-treeview.css" rel="stylesheet">
-	<link href="https://lib.baomitu.com/awesome-bootstrap-checkbox/1.0.2/awesome-bootstrap-checkbox.min.css"
-		rel="stylesheet">
+	<!--<link href="https://lib.baomitu.com/awesome-bootstrap-checkbox/1.0.2/awesome-bootstrap-checkbox.min.css"
+		rel="stylesheet"> -->
+		
 	<link rel="stylesheet" href="css/index.css">
-	<script src="https://cdn.bootcdn.net/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+	
+	<link rel="stylesheet" type="text/css" href="css/result.css"/>
+	
+	<!-- <script src="https://cdn.bootcdn.net/ajax/libs/jquery/1.9.1/jquery.min.js"></script> -->
+	<script src="js/jquery-1.9.1.min.js"></script>
+	
+	<script src="js/spin.min.js"></script>
+	
 	<script src="js/bootstrap.min.js"></script>
+	
 	<script src="js/bootstrap-treeview.js"></script>
-	<!-- <script src="js/bootstrap-select.js"></script> -->
-	<!-- <script src="https://cdn.bootcdn.net/ajax/libs/bootstrap-select/2.0.0-beta1/js/bootstrap-select.js"></script> -->
 
 </head>
 
@@ -26,48 +33,47 @@
 	<div class="container-fluid">
 		<div class="header">
 			<div class="top-left">
-				<h5>
+				<!-- <h5>
 					<span class="glyphicon glyphicon-home"></span>
 					项目风险评估
 					<small class="glyphicon glyphicon-chevron-right" style="margin:0 3px;"></small>
 					<small>
 						抗力实施评估
 					</small>
-				</h5>
+				</h5> -->
 			</div>
-			<div class="top-rig">
-				<button type="button" class="btn btn-xs btn-primary produce"><span class="glyphicon glyphicon-file" aria-hidden="true"></span>生成报告</button>
-				<button type="button" class="btn btn-xs btn-primary down"><span class="glyphicon glyphicon-save" aria-hidden="true"></span>下载</button>
-			</div>
+			<!-- <div class="top-rig">
+				<button type="button" class="btn btn-xs btn-primary produce"><span class="glyphicon glyphicon-file"
+						aria-hidden="true"></span>生成报告</button>
+				<button type="button" class="btn btn-xs btn-primary down"><span class="glyphicon glyphicon-save"
+						aria-hidden="true"></span>下载</button>
+			</div> -->
 		</div>
 		<div class="pullDown">
 			<div class="sel1">
 				<span>项目名称：</span>
-				<select class="selectpicker1" id="projectType" width="80px">
-					<!--<option>请输入</option>-->
-				</select>
+				<select class="selectpicker1" id="projectType" width="80px"></select>
 			</div>
 			<div class="sel2">
 				<span>项目阶段：</span>
-				<select class="selectpicker2">
-					<!--<option>请输入</option>-->
-				</select>
+				<select class="selectpicker2"></select>
 			</div>
 		</div>
 		<div class="middle">
 			<div class="row">
 				<div class="col-md-11 col-md-push-1">
 					<ul class="norm">
-						<li>1分：<span>该项目的风险抗力实施水平明显低于行业内超高层项目的平均水平</span></li>
-						<li>2分：<span>该项目的风险抗力实施水平略低于行业内超高层项目的平均水平</span></li>
-						<li>3分：<span>该项目的风险抗力实施水平与行业内超高层项目的平均水平基本一致</span></li>
-						<li>4分：<span>该项目的风险抗力实施水平略高于行业内超高层项目的平均水平</span></li>
-						<li>5分：<span>该项目的风险抗力实施水平明显高于行业内超高层项目的平均水平</span></li>
+						<li>1分：<span>该项目的风险抗力实施水平明显低于行业内项目的平均水平</span></li>
+						<li>2分：<span>该项目的风险抗力实施水平略低于行业内项目的平均水平</span></li>
+						<li>3分：<span>该项目的风险抗力实施水平与行业内项目的平均水平基本一致</span></li>
+						<li>4分：<span>该项目的风险抗力实施水平略高于行业内项目的平均水平</span></li>
+						<li>5分：<span>该项目的风险抗力实施水平明显高于行业内项目的平均水平</span></li>
 					</ul>
 				</div>
 				<div class="col-md-1 col-md-pull-11 normtit">抗力打分标准</div>
 				<div class="fix" style="position: absolute; top: 45px; right: 20px;">
 					<button type="button" class="btn btn-sm btn-warning calculate">开始计算</button>
+					<button type="button" class="btn btn-sm btn-warning lastResult">查看上次打分结果</button>
 				</div>
 			</div>
 		</div>
@@ -80,69 +86,155 @@
 					<table id="tables" class="table table-bordered" data-toggle="table" style="text-align: center;">
 						<thead>
 							<tr class="active">
-								<th style="text-align: center;">类型</th>
 								<th style="text-align: center;">抗力</th>
+								<th style="text-align: center;">类型</th>
 								<th style="text-align: center;">现场得分</th>
 							</tr>
 						</thead>
 						<tbody>
-							<!-- <tr>
-								<td>塔吊工程</td>
-								<td>进行空载/重载实验</td>
-								<td>
-									<label class="radio-inline">
-										<input type="radio" name="tadiao1" id="inlineRadio1" value="option1">
-										1
-									</label>
-									<label class="radio-inline">
-										<input type="radio" name="tadiao1" id="inlineRadio2" value="option2">
-										2
-									</label>
-									<label class="radio-inline">
-										<input type="radio" name="tadiao1" id="inlineRadio3" value="option3">
-										3
-									</label>
-									<label class="radio-inline">
-										<input type="radio" name="tadiao1" id="inlineRadio3" value="option3">
-										4
-									</label>
-									<label class="radio-inline">
-										<input type="radio" name="tadiao1" id="inlineRadio3" value="option3">
-										5
-									</label>
-								</td>
-							</tr> -->
 						</tbody>
 					</table>
 				</div>
 			</div>
 		</div>
 		<div class="mask hide">
+			<div id="firstDiv">
+			</div>
+		</div>
+		<div class="masks hide">
 			<div class="prompt_box">
 				<div class="prompt_title">
 					<h3>系统提示</h3>
 					<span class="idel">X</span>
 				</div>
 				<div class="prompt_cont">
-					<p class="prompt_text"></p>
+					<p class="prompt_text">计算出错，请稍后重试，或联系管理员处理！</p>
 					<span class="prompt_sure">确定</span>
 				</div>
 			</div>
 
 		</div>
 	</div>
-</body>
+	<!--计算页面-->
+	<div class="container-fluid result hide" style="position: fixed;z-index: 9999;top: 0;background: rgb(245, 245, 245);">
+        <div class="header">
+            <div class="top-left">
+                <h5>
+                    <span class="glyphicon glyphicon-home"></span>
+                   	 评估结果查看
+                </h5>
+            </div>
+            <div class="top-right" style="position: absolute;top: -6px;right: 25px;">
+                <button type="button" class="btn btn-sm btn-warning" onclick="closeRes()">返回打分页 </button>
+            </div>
+        </div>
+        <div class="middle">
+            <div class="rows">
+                <div class="explain">
+                    <div class="titles">
+                        <h5><b>风险等级说明</b><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span></h5>
+                    </div>
+                    <div class="explainlist">
+                        <table class="table table-bordered extab" data-toggle="table" style="text-align: center;">
+                            <thead>
+                                <tr class="active">
+                                    <!-- <th style="text-align: center;width: 150px;">风险值</th> -->
+                                    <th style="text-align: center;width: 150px;">风险等级</th>
+                                    <th style="text-align: center;">描述</th>
+                                    <th style="text-align: center;width: 100px;">备注</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <!-- <td>2.7×10-3以上</td> -->
+                                    <td>特别重大风险</td>
+                                    <td>停止作业，一旦发生讲产生非常严重的经济或社会影响，如组织信誉严重破坏、严重影响组织的正常经营，经济损失重大、社会影响恶略</td>
+                                    <td>V级</td>
+                                    <!-- <td class="red"><span>红色</span><em
+                                            style="width: 25px;height: 10px;padding-left:10px;background: red;"></em>
+                                    </td> -->
+                                </tr>
+                                <tr>
+                                    <!-- <td>2.7×10-5到2.7×10-3</td> -->
+                                    <td>重大风险</td>
+                                    <td>立即整改，一旦发生将产生较大的经济或者社会影响，在一定范围内给组织的经营和组织信誉造成损害</td>
+                                    <td>IV级</td>
+                                    <!-- <td class="red"><span>橙色</span><em
+                                            style="width: 25px;height: 10px;padding-left:10px;background: orange;"></em>
+                                    </td> -->
+                                </tr>
+                                <tr>
+                                    <!-- <td>4.5×10-6到2.7×10-5</td> -->
+                                    <td>中等风险</td>
+                                    <td>需要整改，一旦发生会造成一定的经济损失、社会或生产经营影响，但影响面和影响程度不大</td>
+                                    <td>III级</td>
+                                    <!-- <td class="red"><span>黄色</span><em
+                                            style="width: 25px;height: 10px;padding-left:10px;background: #ff0;"></em>
+                                    </td> -->
+                                </tr>
+                                <tr>
+                                    <!-- <td>1.5×10-6到4.5×10-6</td> -->
+                                    <td>一般风险</td>
+                                    <td>需要注意，一旦发生造成的影响程度较低，一般仅限于组织内部，通过一定手段很快能解决</td>
+                                    <td>II级</td>
+                                    <!-- <td class="red"><span>蓝色</span><em
+                                            style="width: 25px;height: 10px;padding-left:10px;background: blue;"></em>
+                                    </td> -->
+                                </tr>
+                                <tr>
+                                    <!-- <td>0到1.5810-6</td> -->
+                                    <td>低风险</td>
+                                    <td>稍有危险，一旦发生造成的影响几乎不存在，通过简单的措施就能弥补</td>
+                                    <td>I级</td>
+                                    <!-- <td class="red"><span>绿色</span><em
+                                            style="width: 25px;height: 10px;padding-left:10px;background: green;"></em>
+                                    </td> -->
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="content">
+                <div class="titles">
+                    <h5><b>风险等级说明</b></h5>
+                </div>
+                <div class="result_table"></div>
+            </div>
+        </div>
+    </div>
 
-<!-- <script src="js/sweetalert.js"></script> -->
+</body>
 <script>
-	// var host = window.location.host;
-	// console.log(host)
-	var host = "http://192.168.4.132:9081";
+	var host = "http://192.168.4.134:6083";
+	// var host = "http://192.168.4.132:9081";
 	var propk = "";//项目pk
 	var stage = "";//阶段
 	var stagepk = "";//阶段pk
-	var stageName="";
+	var stageName = "";
 	var text = "";//类型
+	var clickIndex = 0;
+	var xmJ = null;
+	var last=false;
+	var opts = {
+		lines: 10, // 花瓣数目
+		length: 20, // 花瓣长度
+		width: 4, // 花瓣宽度
+		radius: 8, // 花瓣距中心半径
+		corners: 1, // 花瓣圆滑度 (0-1)
+		rotate: 0, // 花瓣旋转角度
+		direction: 1, // 花瓣旋转方向 1: 顺时针, -1: 逆时针
+		color: '#000', // 花瓣颜色
+		speed: 1, // 花瓣旋转速度
+		trail: 60, // 花瓣旋转时的拖影(百分比)
+		shadow: false, // 花瓣是否显示阴影
+		hwaccel: false, //spinner 是否启用硬件加速及高速旋转            
+		className: 'spinner', // spinner css 样式名称
+		zIndex: 2e9, // spinner的z轴 (默认是2000000000)
+		top: '100%', // spinner 相对父容器Top定位 单位 px
+		left: '100%'// spinner 相对父容器Left定位 单位 px
+	};
+	var spinner = new Spinner(opts);
 	var userCode = GetQueryString('user_code');
 	function GetQueryString(name) {
 		var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
@@ -156,7 +248,7 @@
 	}
 	window.onload = function () {
 		$.ajax({
-			url: host +"/service/security?method=projects&user_code=" + userCode,
+			url: host + "/service/security?method=projects&user_code=" + userCode,
 			type: 'get',
 			dataType: 'json',
 			success: function (data) {
@@ -166,228 +258,215 @@
 					var option = document.createElement("option");
 					// $("#projectType").prepend("<option value='0'>请选择</option>")
 					$("#projectType").append("<option value='" + arr[i].pk + "'>" + arr[i].name + "</option>");
-					// option.value = arr[i].pk;
-					// option.innerText = arr[i].name;
-					// add.append(option);
 				}
-				// //使用refresh方法更新UI以匹配新状态。
-				// $('.selectpicker1').selectpicker('refresh');
-				// //render方法强制重新渲染引导程序 - 选择ui。
-				// $('.selectpicker1').selectpicker('render');
 				$(".selectpicker1").change(function () {
 					if (this.innerHTML == '请输入') {
 						return;
 					} else {
-						var proname = $(".selectpicker1 option:selected").text();
-						localStorage.setItem("proname", proname);
 						propk = $(".selectpicker1").val();
 					}
 					selcont(propk)
 				});
-				$(".selectpicker1 option").eq(0).attr("selected",true)
+				$(".selectpicker1 option").eq(0).attr("selected", true)
 				$(".selectpicker1").change()
 
 			}
 		});
-		//获取到selectpicker1
-		// $('#projectType').on('changed.bs.select', function (e, clickedIndex, isSelected, previousValue) {
-		// 	console.log($(".selectpicker1").val(),clickedIndex, isSelected,previousValue,"获取到的值")
-		// 	propk = $(".selectpicker1").val();
-		// 	console.log(propk)
-		// 	selcont(propk)
-		// });
-		// $('#projectType').on('change', function () {
-		// 	console.log($(".selectpicker1").val())
-		// })
-		
 		//获取项目阶段的数据 
 		function selcont(v) {
 			// console.log(v)
 			// $('.selectpicker2').val('')
 			$.ajax({
-				url: host +"/service/security?method=kl&project=" + v,
+				url: host + "/service/security?method=kl&project=" + v,
 				type: 'get',
 				dataType: 'json',
 				success: function (data) {
 					// var data = JSON.parse(data)
 					var arr = data.data;
 					// console.log(arr)
-					// $.each(arr, function (i, t) {
-					// 	console.log(i, t)
-					// })
 					for (var i = 0; i < arr.length; i++) {
 						var obj = arr[i].info;
-						$(".selectpicker2").append("<option value='" + arr[i].stagepk + "' index='"+i+"'>" + arr[i].stage + "</option>");
+						$(".selectpicker2").append("<option value='" + arr[i].stagepk + "' index='" + i + "'>" + arr[i].stage + "</option>");
 					}
 					selright(arr);
-					// //使用refresh方法更新UI以匹配新状态。
-					// $('.selectpicker2').selectpicker('refresh');
-					// //render方法强制重新渲染引导程序 - 选择ui。
-					// $('.selectpicker2').selectpicker('render');
+
 				}
 			});
 		}
-		var clickIndex=0,xmJ=null;
+
 		function selright(arr) {
 			//获取到selectpicker2的值 
 			$(".selectpicker2").change(function () {
-				var index=$(".selectpicker2 option:selected").attr("index");
+				var index = $(".selectpicker2 option:selected").attr("index");
 				stageName = $(".selectpicker2 option:selected").text();
 				stagepk = $(".selectpicker2").val()
-				localStorage.setItem("protext", stageName);
 				stage = $(".selectpicker2").val();
-				xmJ=arr[index].info;
-				$.each(xmJ, function(key,val) {
-					$.each(val.kls, function(key1,val1) {
-						if(!val1.value){
-							val1.value=3
+				xmJ = arr[index].info;
+				$.each(xmJ, function (key, val) {
+					$.each(val.kls, function (key1, val1) {
+						if (!val1.value) {
+							val1.value = 3
 						}
 					});
 				});
 				// 树左侧数据
 				$('#treeview11').treeview({
-					color: "#428bca",
+					color: "#000",
+					backColor: '#F5F5F5',
 					data: xmJ,
 					nodeIcon: '',//自定义图标
+					highlightSelected: true,
+					selectedBackColor: '#F5F5F5',
+					selectedColor: '#0367FC',
+					// state: {
+					// 	checked: true,
+					// 	expanded:true,
+					// },
 					onNodeSelected: function (event, node) {
-						clickIndex=node.nodeId
+						clickIndex = node.nodeId
+						// $("#treeview11").treeview('selectNode',[clickIndex,{silent:true}]);//默认选中
 						bottomcont(xmJ[clickIndex].kls, xmJ[clickIndex].text, stagepk)
 						// $('#event_output').prepend('<p>您单击了 ' + node.text + '</p>');
 					}
 				});
-				bottomcont(xmJ[clickIndex].kls, xmJ[clickIndex].text, stagepk)
+				$("#treeview11 ul li").eq(0).trigger('click');
 			});
-			$(".selectpicker2 option").eq(0).attr("selected",true);
+			$(".selectpicker2 option").eq(0).attr("selected", true);
 			$(".selectpicker2").change()
-		}
 
+		}
 		//关闭X
 		$('.idel').click(function () {
-			$('.mask').addClass('hide');
+			$('.masks').addClass('hide');
 		})
 
 		//生成报告
 		$(".produce").on("click", function () {
 			// console.log('生成报告')
 		})
-
 		//下载
 		$(".down").on("click", function () {
 			// console.log('下载')
 		})
-
 		function bottomcont(list, text, stagepk) {
-			// console.log(list)
-//			text = text;
-			// console.log(propk,stage,stagepk,text)
-			var userTableStr = '';
+			$('#tables>tbody').empty();
 			for (var i = 0; i < list.length; i++) {
-				userTableStr += '<tr><td>' 
-				userTableStr += list[i].dcname + '</td><td>'
-				userTableStr += list[i].name + '</td><td class="radioList" id='+ list[i].name + i + '>'
-				if(list[i].value==1){
-						userTableStr += '<label class="radio-inline"><input type="radio" names='+ list[i].pk + ' name='+ list[i].pk +i+' value="1" checked>1</label>'
-				}else{
-						userTableStr += '<label class="radio-inline"><input type="radio" names='+ list[i].pk + ' name='+ list[i].pk +i+' value="1">1</label>'
-				}
-				if(list[i].value==2){
-						userTableStr += '<label class="radio-inline"><input type="radio" names='+ list[i].pk + ' name='+ list[i].pk +i+' value="2" checked>2</label>'
-				}else{
-						userTableStr += '<label class="radio-inline"><input type="radio" names='+ list[i].pk + ' name='+ list[i].pk +i+' value="2">2</label>'
-				}
-				if(list[i].value==3){
-						userTableStr += '<label class="radio-inline"><input type="radio" names='+ list[i].pk + ' name='+ list[i].pk +i+' value="3" checked>3</label>'
-				}else{
-						userTableStr += '<label class="radio-inline"><input type="radio" names='+ list[i].pk + ' name='+ list[i].pk +i+' value="3">3</label>'
-				}
-				if(list[i].value==4){
-						userTableStr += '<label class="radio-inline"><input type="radio" names='+ list[i].pk + ' name='+ list[i].pk +i+' value="4" checked>4</label>'
-				}else{
-						userTableStr += '<label class="radio-inline"><input type="radio" names='+ list[i].pk + ' name='+ list[i].pk +i+' value="4">4</label>'
-				}
-				if(list[i].value==5){
-						userTableStr += '<label class="radio-inline"><input type="radio" names='+ list[i].pk + ' name='+ list[i].pk +i+' value="5" checked>5</label>'
-				}else{
-						userTableStr += '<label class="radio-inline"><input type="radio" names='+ list[i].pk + ' name='+ list[i].pk +i+' value="5">5</label>'
-				}
+				var userTableStr = '';
+				userTableStr += '<tr><td>'
+				userTableStr += list[i].name + '</td><td>'
+				userTableStr += list[i].dcname + '</td><td class="radioList" id=' + list[i].name + i + '>'
+				userTableStr += '<label class="radio-inline"><input type="radio" names=' + i + ' name=' + list[i].pk + i + ' value="1">1</label>'
+				userTableStr += '<label class="radio-inline"><input type="radio" names=' + i + ' name=' + list[i].pk + i + ' value="2">2</label>'
+				userTableStr += '<label class="radio-inline"><input type="radio" names=' + i + ' name=' + list[i].pk + i + ' value="3">3</label>'
+				userTableStr += '<label class="radio-inline"><input type="radio" names=' + i + ' name=' + list[i].pk + i + ' value="4">4</label>'
+				userTableStr += '<label class="radio-inline"><input type="radio" names=' + i + ' name=' + list[i].pk + i + ' value="5">5</label>'
 				userTableStr += '</td></tr>';
+				$('#tables>tbody').append(userTableStr);
+				$('#tables>tbody tr').eq(i).find('input[value='+list[i].value+']').attr("checked",true);
+				
 			}
-			$('#tables>tbody').html(userTableStr);
+			
 			//radio
-			$('input[type="radio"]').change(function(){
-				var num =$(this).val();
-				var pk=$(this).attr('names');
-				var index=xmJ[clickIndex].kls.findIndex(function(val){
-					return val.pk==pk
-				})
-				xmJ[clickIndex].kls[index].value=num;
+			$('input[type="radio"]').change(function () {
+				var num = $(this).val();
+				var index = $(this).attr('names');
+				xmJ[clickIndex].kls[index].value = num;
 			})
 			//开始计算
 			$('.calculate').unbind('click').click(function () {
+				var proname = $(".selectpicker1 option:selected").text();
+				 $('.content>.titles h5 b').text(proname)
+				$(".mask").removeClass('hide');
+				var target = $("#firstDiv").get(0);
+				spinner.spin(target);
 				var obj = {
 					"score": xmJ,
 					"projectID": propk,
 					"stageID": stage,
-					"stageName":stageName
+					"stageName": stageName
 				}
-				console.log(obj)
 				$.ajax({
 					url: host + "/service/calculation",
 					type: 'post',
 					dataType: 'json',
 					data: JSON.stringify(obj),
 					success: function (res) {
-						console.log(res, '返回的数据')
 						if (res.result == true) {
-							$(".mask").removeClass('hide');
-							console.log(res.data)
-							localStorage.setItem("data", JSON.stringify(res.data));
-							$('.prompt_text').text('现在开始计算分数~');
-							$('.prompt_sure').click(function () {
-								$('.mask').addClass('hide');
-								location.href = "result.html"
-							})
-						}else{
-							alert("没有返回值")
+							last=true;
+							var arr = res.data;
+					        var html = '';
+					        html += '<div class="row"><div class="title"><h5><b>' + arr.order + '</b>（' + arr.date +
+					            '）</h5></div><table class="table table-bordered" data-toggle="table" style="text-align: center;"><thead><tr><th style="text-align: center;">风险源</th><th style="text-align: center;">顶层事故</th><th style="text-align: center;">结果</th><th style="text-align: center;">风险等级</th></tr></thead><tbody>'
+					
+					        var table2 = arr.table2;
+					        // console.log(table2)
+					        $.each(table2, function (k, item) {
+					            $.each(item, function (j, val) {
+					                if (j == 0) {
+					                    html += '<tr><td rowspan="' + item.length + '">' + k + '</td> <td>' + item[j].variety + '</td><td>' + item[j].origin + '</td><td>' + item[j].fengxian + '</td></tr>'
+					                } else {
+					                    html += '<tr><td>' + item[j].variety + '</td><td>' + item[j].origin + '</td><td>' + item[j].fengxian + '</td></tr>'
+					                }
+					            })
+					        })
+					        html += ' </tbody></table></div>'
+					        $('.result_table').html(html);
+					        $(".result").removeClass('hide');
+					       
+					        $(".mask").addClass('hide');
+					        spinner.spin();
 						}
+					},
+					error: function (res) {
+						$(".masks").removeClass('hide');
+						$('.prompt_sure').click(function () {
+							$('.masks').addClass('hide');
+						})
+						spinner.spin();//取消动画
+						$(".mask").addClass('hide');
+
 					}
 				});
-				
-				
 			})
+			//查看打分页
+			$('.lastResult').on("click", function () {
+				if (last) {
+					$(".result").removeClass('hide');
+				} else {
+					$(".masks").removeClass('hide');
+					$('.prompt_text').text('您还没打过分~')
+					$('.prompt_sure').click(function () {
+						$('.masks').addClass('hide');
+					})
+				}
+			})
+
 		}
-
+		$('.explain>.titles').on("click", function () {
+            $('.explainlist').toggle();
+        })
+		
 	}
-
+	function closeRes(){
+		$(".result").addClass('hide')
+	}
 	//打分默认禁用
 	// $('#tables>tbody>tr>.radioList>.radio-inline>input').attr("disabled", "disabled")
-	
-	//兼容IE
-	if (!Array.prototype.findIndex) {
-	  Object.defineProperty(Array.prototype, 'findIndex', {
-	    value: function(predicate) {
-	      if (this == null) {
-	        throw new TypeError('"this" is null or not defined');
-	      }
-	      var o = Object(this);
-	      var len = o.length >>> 0;
-	      if (typeof predicate !== 'function') {
-	        throw new TypeError('predicate must be a function');
-	      }
-	      var thisArg = arguments[1];
-	      var k = 0;
-	      while (k < len) {
-	        var kValue = o[k];
-	        if (predicate.call(thisArg, kValue, k, o)) {
-	          return k;
-	        }
-	        k++;
-	      }
-	      return -1;
-	    }
-	  });
+	if (!Array.indexOf) {
+		Array.prototype.indexOf = function (obj) {
+			for (var i = 0; i < this.length; i++) {
+				if (this[i] == obj) {
+					return i;
+				}
+			}
+			return -1;
+		}
 	}
-
+	var clientHeight = $(window).height();
+	var botHeight = clientHeight - 244 + 'px';
+	$('.bottom').css('height', botHeight)
+	botHeight = clientHeight - 52 + 'px';
+    $('.result>.middle').css('height', botHeight)
 </script>
 
 </html>
